@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrey Filippov — Test Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300..700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root, [data-theme="light"] {
+      --color-bg:             #f7f6f2;
+      --color-surface:        #f9f8f5;
+      --color-surface-2:      #fbfbf9;
+      --color-divider:        #dcd9d5;
+      --color-border:         #d4d1ca;
+      --color-text:           #28251d;
+      --color-text-muted:     #7a7974;
+      --color-text-faint:     #bab9b4;
+      --color-primary:        #01696f;
+      --color-primary-hover:  #0c4e54;
+      --color-primary-highlight: #cedcd8;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
+      --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.08);
+      --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-6: 1.5rem;
+      --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Work Sans', system-ui, sans-serif;
+      --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+      --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+      --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+      --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+      --text-3xl:  clamp(2.5rem,   1rem    + 4vw,    5rem);
+      --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="dark"] {
+      --color-bg:             #171614;
+      --color-surface:        #1c1b19;
+      --color-surface-2:      #201f1d;
+      --color-divider:        #262523;
+      --color-border:         #393836;
+      --color-text:           #cdccca;
+      --color-text-muted:     #797876;
+      --color-text-faint:     #5a5957;
+      --color-primary:        #4f98a3;
+      --color-primary-hover:  #227f8b;
+      --color-primary-highlight: #313b3b;
+      --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.2);
+      --shadow-md: 0 4px 12px oklch(0 0 0 / 0.3);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d;
+        --color-divider: #262523; --color-border: #393836;
+        --color-text: #cdccca; --color-text-muted: #797876; --color-text-faint: #5a5957;
+        --color-primary: #4f98a3; --color-primary-hover: #227f8b;
+        --color-primary-highlight: #313b3b;
+      }
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100dvh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      line-height: 1.6;
+      transition: background-color var(--transition-interactive), color var(--transition-interactive);
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    p { text-wrap: pretty; max-width: 68ch; }
+    h1, h2, h3 { text-wrap: balance; line-height: 1.15; }
+
+    /* ====== LAYOUT ====== */
+    .page-wrapper {
+      max-width: 900px;
+      margin-inline: auto;
+      padding-inline: var(--space-6);
+    }
+
+    /* ====== HEADER ====== */
+    header {
+      border-bottom: 1px solid oklch(from var(--color-text) l c h / 0.08);
+      padding-block: var(--space-4);
+      position: sticky;
+      top: 0;
+      background-color: color-mix(in oklch, var(--color-bg) 90%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin-inline: auto;
+      padding-inline: var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      text-decoration: none;
+      color: var(--color-text);
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+    }
+
+    .logo svg { color: var(--color-primary); }
+
+    nav a {
+      text-decoration: none;
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      transition: color var(--transition-interactive);
+    }
+    nav a:hover { color: var(--color-primary); }
+
+    .header-actions { display: flex; align-items: center; gap: var(--space-3); }
+
+    .theme-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: var(--radius-full);
+      background: var(--color-surface);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.10);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: color var(--transition-interactive), background var(--transition-interactive);
+    }
+    .theme-btn:hover { color: var(--color-primary); background: var(--color-surface-2); }
+
+    /* ====== HERO ====== */
+    .hero {
+      padding-block: clamp(var(--space-12), 8vw, var(--space-16));
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      background: var(--color-primary-highlight);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      width: fit-content;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--color-text);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero h1 span { font-style: normal; font-weight: 400; color: var(--color-text-muted); }
+
+    .hero-sub {
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      font-weight: 300;
+      max-width: 52ch;
+    }
+
+    .hero-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--color-primary);
+      border-radius: var(--radius-full);
+    }
+
+    /* ====== CARDS ====== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-4);
+      padding-bottom: var(--space-12);
+    }
+
+    .card {
+      background: var(--color-surface);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--transition-interactive), transform var(--transition-interactive);
+    }
+    .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+    .card-icon {
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-2);
+      font-weight: 400;
+    }
+
+    .card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+
+    /* ====== SECTION LABEL ====== */
+    .section-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-faint);
+      margin-bottom: var(--space-6);
+    }
+
+    /* ====== STATUS BADGE ====== */
+    .status-bar {
+      background: var(--color-surface);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-6);
+      margin-bottom: var(--space-10);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      background: #22c55e;
+      border-radius: var(--radius-full);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ====== FOOTER ====== */
+    footer {
+      border-top: 1px solid oklch(from var(--color-text) l c h / 0.08);
+      padding-block: var(--space-8);
+      color: var(--color-text-faint);
+      font-size: var(--text-xs);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    footer a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition-interactive);
+    }
+    footer a:hover { color: var(--color-primary); }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ====== REDUCED MOTION ====== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header role="banner">
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="Andrey Filippov home">
+        <!-- SVG logo: AF monogram -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect width="28" height="28" rx="7" fill="currentColor" style="color: var(--color-primary-highlight)"/>
+          <text x="5" y="20" font-family="'Instrument Serif', serif" font-size="14" font-style="italic" fill="var(--color-primary)">AF</text>
+        </svg>
+        Andrey Filippov
+      </a>
+      <div class="header-actions">
+        <nav aria-label="Main navigation">
+          <a href="https://github.com/andreyfilippovru" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+        <button class="theme-btn" data-theme-toggle aria-label="Switch color theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="page-wrapper">
+
+      <section class="hero" aria-labelledby="hero-heading">
+        <div class="hero-tag">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><circle cx="5" cy="5" r="5"/></svg>
+          Test Page · GitHub Pages
+        </div>
+        <h1 id="hero-heading">International <span>&amp;</span> Digital</h1>
+        <div class="hero-divider" aria-hidden="true"></div>
+        <p class="hero-sub">Эксперт в международном сотрудничестве, цифровой экономике и продвижении российских технологических решений на глобальных рынках.</p>
+      </section>
+
+      <div class="status-bar" role="status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Страница работает на GitHub Pages — развёртывание успешно
+      </div>
+
+      <p class="section-label">Направления работы</p>
+      <div class="cards-grid">
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3>Международное сотрудничество</h3>
+          <p>ЕАЭС, БРИКС, ШОС, G20, ЮНИДО, МСЭ, ЮНЕСКО — выстраивание партнёрств и реализация совместных программ.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <h3>Цифровая экономика</h3>
+          <p>Продвижение российских цифровых решений, цифровая трансформация отраслей, ICT-политика на международном уровне.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3>Стратегическое управление</h3>
+          <p>GR, корпоративное право, стратегическое планирование, управление проектами и публичные коммуникации.</p>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="page-wrapper" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;width:100%;">
+      <span>© 2026 Andrey Filippov</span>
+      <a href="https://github.com/andreyfilippovru/test-page" target="_blank" rel="noopener noreferrer">github.com/andreyfilippovru/test-page</a>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      const btn = document.querySelector('[data-theme-toggle]');
+      const root = document.documentElement;
+      let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.setAttribute('data-theme', theme);
+
+      function updateIcon() {
+        if (!btn) return;
+        btn.setAttribute('aria-label', 'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' mode');
+        btn.innerHTML = theme === 'dark'
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      }
+      updateIcon();
+
+      if (btn) {
+        btn.addEventListener('click', function() {
+          theme = theme === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', theme);
+          updateIcon();
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>
